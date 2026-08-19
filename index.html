@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Catch Log</title>
+  <meta name="theme-color" content="#0F1618">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Catch Log">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<link rel="icon" type="image/png" href="data:image/png;base64,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AAAgFAEAAKEIAAAIRQAAQCgCAABCEQAAEIoAAIBQBAAAhCIAACAUAQAAoQgAAAhFAABAKAIAAEIRAAAQigAAgFAEAACEIgAAIBQBAAChCAAACEUAAEAoAgAAQhEAABCKAACAUAQAAIQiAAAgFAEAAKEIAAAIRQAAQCgCAABCEQAAEIoAAIBQBAAAhCIAACAUAQAAoQgAAAhFAABAKAIAAEIRAAAQigAAgFAEAACEIgAAIBQBAAChCAAACEUAAEAoAgAAQhEAABCKAACAUAQAAIQiAAAgFAEAAKEIAAAIRQAAQCgCAABCEQAAEIoAAIBQBAAAhCIAACAUAQAAoQgAAAhFAABAKAIAAEIRAAAQigAAgFAEAACEIgAAIBQBAAChCAAACEUAAEAoAgAAQhEAABCKAACAUAQAAIQiAAAgFAEAAKEIAAAIRQAAQCgCAABCEQAAEIoAAIBQBAAAhCIAACAUAQAAoQgAAAhFAABAKAIAAEIRAAAQigAAgFAEAACEIgAAIBQBAAChCAAACEUAAEAoAgAAQhEAABCKAACAUAQAAIQiAAAgFAEAAKEIAAAIRQAAQCgCAABC/X8TPGB5EJ1M3QAAAABJRU5ErkJggg==">
+<link rel="apple-touch-icon" href="data:image/png;base64,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AAAgFAEAAKEIAAAIRQAAQCgCAABCEQAAEIoAAIBQBAAAhCIAACAUAQAAoQgAAAhFAABAKAIAAEIRAAAQigAAgFAEAACEIgAAIBQBAAChCAAACEUAAEAoAgAAQhEAABCKAACAUAQAAIQiAAAgFAEAAKEIAAAIRQAAQCgCAABCEQAAEIoAAIBQBAAAhCIAACAUAQAAoQgAAAhFAABAKAIAAEIRAAAQigAAgFAEAACEIgAAIBQBAAChCAAACEUAAEAoAgAAQhEAABCKAACAUAQAAIQiAAAgFAEAAKEIAAAIRQAAQCgCAABCEQAAEIoAAIBQBAAAhCIAACAUAQAAoQgAAAhFAABAKAIAAEIRAAAQigAAgFAEAACEIgAAIBQBAAChCAAACEUAAEAoAgAAQhEAABCKAACAUAQAAIQiAAAgFAEAAKEIAAAIRQAAQCgCAABCEQAAEIoAAIBQBAAAhCIAACAUAQAAoQgAAAhFAABAKAIAAEIRAAAQigAAgFAEAACEIgAAIBQBAAChCAAACEUAAEAoAgAAQhEAABCKAACAUAQAAIQiAAAgFAEAAKEIAAAIRQAAQCgCAABC/X8TPGB5EJ1M3QAAAABJRU5ErkJggg==">
+<style>
+  :root{
+    --bg: #0F1618;
+    --surface: #172126;
+    --surface-2: #1E2A30;
+    --line: #2B3A40;
+    --brass: #C9A227;
+    --brass-dim: #8A6F1D;
+    --teal: #3F9C93;
+    --text: #E9E4D8;
+    --text-dim: #9AA8AA;
+    --danger: #B0503A;
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html,body{
+    margin:0; padding:0; height:100%; background:var(--bg); color:var(--text);
+    font-family:var(--font-body); overscroll-behavior:none;
+  }
+  #app{ position:fixed; inset:0; display:flex; flex-direction:column; }
+  .screen{ flex:1; overflow-y:auto; display:none; padding-bottom:90px; }
+  .screen.active{ display:flex; flex-direction:column; }
+
+  /* ---------- Top label ---------- */
+  .topbar{
+    padding:18px 18px 10px; display:flex; align-items:baseline; justify-content:space-between;
+  }
+  .topbar h1{
+    font-family:var(--font-display); text-transform:uppercase; letter-spacing:2px;
+    font-size:20px; margin:0; color:var(--text);
+  }
+  .topbar .eyebrow{
+    font-family:var(--font-mono); font-size:11px; color:var(--brass); letter-spacing:1px;
+  }
+
+  /* ---------- Camera tab ---------- */
+  #camera-screen{ align-items:center; justify-content:center; text-align:center; }
+  .camera-hero{ display:flex; flex-direction:column; align-items:center; gap:26px; padding:20px; }
+  .shutter-ring{
+    width:150px; height:150px; border-radius:50%;
+    border:3px solid var(--brass); display:flex; align-items:center; justify-content:center;
+    background: radial-gradient(circle at 30% 30%, #223034, var(--surface));
+    box-shadow: 0 0 0 8px rgba(201,162,39,0.08);
+  }
+  .shutter-ring:active{ transform: scale(0.96); }
+  .shutter-ring svg{ width:56px; height:56px; }
+  .camera-caption{ font-family:var(--font-mono); font-size:13px; color:var(--text-dim); max-width:240px; line-height:1.5; }
+  .camera-caption b{ color:var(--brass); }
+  #cameraInput{ display:none; }
+  .flash-status{ position:fixed; top:16px; left:50%; transform:translateX(-50%); background:var(--brass);
+    color:#1a1a1a; font-family:var(--font-mono); font-size:12px; font-weight:600; padding:8px 16px;
+    border-radius:3px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:999; letter-spacing:0.5px;}
+  .flash-status.show{ opacity:1; }
+
+  /* ---------- Ticket card (shared: draft list + log grid) ---------- */
+  .ticket-list{ padding: 4px 14px 14px; display:flex; flex-direction:column; gap:10px; }
+  .ticket{
+    display:flex; background:var(--surface); border:1px solid var(--line); border-radius:4px;
+    overflow:hidden; position:relative;
+  }
+  .ticket::after{
+    content:''; position:absolute; left:74px; top:0; bottom:0; width:0;
+    border-left:2px dashed var(--line);
+  }
+  .ticket .thumb{ width:74px; height:74px; flex-shrink:0; object-fit:cover; background:#000; }
+  .ticket .thumb.placeholder{ display:flex; align-items:center; justify-content:center; color:var(--text-dim); }
+  .ticket .body{ flex:1; padding:10px 12px; min-width:0; }
+  .ticket .row1{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+  .ticket .species{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:0.5px;
+    font-size:16px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .ticket .species.empty{ color:var(--text-dim); font-style:italic; text-transform:none; letter-spacing:0; font-family:var(--font-body); font-size:13px;}
+  .ticket .weight{ font-family:var(--font-mono); font-size:13px; color:var(--brass); flex-shrink:0; }
+  .ticket .meta{ font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:4px; }
+  .ticket .tag{ display:inline-block; margin-top:6px; font-size:10px; font-family:var(--font-mono);
+    color:var(--teal); border:1px solid var(--teal); padding:1px 6px; border-radius:2px; letter-spacing:0.5px;}
+  .ticket .tag.warn{ color:var(--brass); border-color:var(--brass); }
+
+  .empty-state{ padding:60px 30px; text-align:center; color:var(--text-dim); }
+  .empty-state svg{ width:40px; height:40px; opacity:0.4; margin-bottom:14px; }
+  .empty-state p{ font-family:var(--font-mono); font-size:13px; line-height:1.6; }
+
+  /* ---------- Log grid ---------- */
+  .log-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; padding:4px 14px 14px; }
+  .log-card{ background:var(--surface); border:1px solid var(--line); border-radius:4px; overflow:hidden; }
+  .log-card .thumb{ width:100%; height:130px; object-fit:cover; display:block; background:#000; }
+  .log-card .info{ padding:9px 10px 11px; }
+  .log-card .species{ font-family:var(--font-display); text-transform:uppercase; font-size:14px; letter-spacing:0.3px; }
+  .log-card .sub{ font-family:var(--font-mono); font-size:11px; color:var(--brass); margin-top:3px; }
+  .log-card .date{ font-family:var(--font-mono); font-size:10px; color:var(--text-dim); margin-top:2px; }
+
+  /* ---------- Bottom nav ---------- */
+  .navbar{
+    position:fixed; left:0; right:0; bottom:0; height:78px;
+    background:var(--surface); border-top:1px solid var(--line);
+    display:flex; padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .nav-btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    background:none; border:none; color:var(--text-dim); font-family:var(--font-mono); font-size:10px;
+    letter-spacing:1px; text-transform:uppercase; position:relative;
+  }
+  .nav-btn svg{ width:22px; height:22px; }
+  .nav-btn.active{ color:var(--brass); }
+  .nav-btn.active svg{ stroke:var(--brass); }
+  .nav-badge{
+    position:absolute; top:2px; right:calc(50% - 26px); background:var(--brass); color:#161616;
+    font-family:var(--font-mono); font-weight:700; font-size:10px; min-width:16px; height:16px;
+    border-radius:8px; display:flex; align-items:center; justify-content:center; padding:0 4px;
+  }
+
+  /* ---------- Detail / editor overlay ---------- */
+  .overlay{
+    position:fixed; inset:0; background:var(--bg); z-index:500; display:none; flex-direction:column;
+  }
+  .overlay.active{ display:flex; }
+  .overlay-header{
+    display:flex; align-items:center; justify-content:space-between; padding:16px 14px;
+    border-bottom:1px solid var(--line); flex-shrink:0;
+  }
+  .overlay-header .close-btn{ background:none; border:none; color:var(--text); padding:4px; }
+  .overlay-header .close-btn svg{ width:22px; height:22px; }
+  .overlay-header h2{ font-family:var(--font-display); text-transform:uppercase; letter-spacing:1.5px; font-size:15px; margin:0; }
+  .overlay-body{ flex:1; overflow-y:auto; padding:0 16px 24px; }
+  .overlay-photo{ width:100%; aspect-ratio: 4/3; object-fit:cover; border-radius:4px; margin:14px 0; background:#000;}
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-family:var(--font-mono); font-size:11px; color:var(--brass);
+    letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+  .field input, .field select, .field textarea{
+    width:100%; background:var(--surface-2); border:1px solid var(--line); color:var(--text);
+    padding:11px 12px; border-radius:4px; font-family:var(--font-body); font-size:15px;
+  }
+  .field textarea{ resize:vertical; min-height:60px; font-family:var(--font-mono); font-size:13px; }
+  .field-row{ display:flex; gap:10px; }
+  .field-row .field{ flex:1; }
+
+  .info-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px 16px; margin-bottom:18px; }
+  .info-grid .k{ font-family:var(--font-mono); font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+  .info-grid .v{ font-size:15px; margin-top:2px; }
+  .info-grid .v.mono{ font-family:var(--font-mono); color:var(--brass); }
+
+  .btn{
+    width:100%; padding:14px; border-radius:4px; border:none; font-family:var(--font-display);
+    text-transform:uppercase; letter-spacing:1.5px; font-size:14px; margin-top:6px;
+  }
+  .btn-primary{ background:var(--brass); color:#161616; }
+  .btn-secondary{ background:transparent; color:var(--text); border:1px solid var(--line); }
+  .btn-danger{ background:transparent; color:var(--danger); border:1px solid var(--danger); }
+  .btn-ghost{ background:transparent; color:var(--teal); border:1px solid var(--teal); font-size:12px; padding:10px; }
+
+  .divider{ height:1px; background:var(--line); margin:20px 0; }
+  .map-link{ display:flex; align-items:center; gap:8px; color:var(--teal); text-decoration:none;
+    font-family:var(--font-mono); font-size:13px; padding:12px; border:1px solid var(--line); border-radius:4px; margin-bottom:16px; }
+  .map-link svg{ width:18px; height:18px; flex-shrink:0; }
+
+  .sync-status{ font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:-8px; margin-bottom:16px; line-height:1.5; }
+
+
+  /* ---------- Species search + add ---------- */
+  .species-search-row{display:flex;gap:8px;padding:4px 14px 0;align-items:center;}
+  .species-search-wrap{position:relative;flex:1;display:flex;align-items:center;}
+  .species-search{width:100%;height:44px;background:var(--surface);border:1px solid var(--line);border-radius:10px;color:var(--text);padding:0 38px 0 38px;outline:none;font-size:14px;}
+  .species-search:focus{border-color:var(--brass);box-shadow:0 0 0 2px rgba(201,162,39,.10);}
+  .species-search::placeholder{color:var(--text-dim);}
+  .species-search-icon{position:absolute;left:13px;color:var(--brass);font-size:24px;line-height:1;pointer-events:none;transform:rotate(-20deg);}
+  .species-search-clear{position:absolute;right:7px;width:32px;height:32px;border:0;background:transparent;color:var(--text-dim);font-size:22px;border-radius:50%;display:none;}
+  .species-search-clear.show{display:block;}
+  .add-species-btn{width:44px;height:44px;flex:0 0 44px;border:1px solid var(--brass);border-radius:10px;background:var(--brass);color:#101010;font-size:29px;line-height:1;font-weight:300;box-shadow:0 3px 10px rgba(0,0,0,.2);}
+  .add-species-btn:active{transform:scale(.94);}
+  .species-search-count{padding:7px 16px 0;min-height:22px;color:var(--text-dim);font-family:var(--font-mono);font-size:10px;letter-spacing:.5px;}
+
+  /* ---------- Species & catch database ---------- */
+  .species-list{display:flex;flex-direction:column;gap:10px;padding:4px 14px 18px;}
+  .species-card{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .species-main{display:flex;gap:12px;padding:12px;}
+  .species-photo-wrap{width:92px;height:92px;flex:0 0 92px;position:relative;}
+  .species-photo{width:100%;height:100%;object-fit:cover;border-radius:6px;background:var(--surface-2);display:block;}
+  .species-photo.empty{display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-family:var(--font-mono);font-size:9px;text-align:center;padding:8px;}
+  .species-photo-btn{position:absolute;right:5px;bottom:5px;width:30px;height:30px;border:1px solid var(--brass);border-radius:50%;background:rgba(15,22,24,.88);color:var(--brass);display:flex;align-items:center;justify-content:center;}
+  .species-photo-btn svg{width:15px;height:15px;}
+  .species-copy{min-width:0;flex:1;}
+  .species-name{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.6px;font-size:17px;margin-bottom:3px;}
+  .species-type{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.8px;}
+  .status-bar{margin-top:9px;border:1px solid var(--line);border-radius:999px;padding:6px 9px;display:flex;align-items:center;justify-content:space-between;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.8px;background:var(--surface-2);}
+  .status-bar.caught{border-color:var(--teal);color:var(--teal);}
+  .status-bar.missing{border-color:var(--brass-dim);color:var(--brass);}
+  .status-dot{width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:6px;}
+  .status-left{display:flex;align-items:center;}
+  .status-hint{opacity:.7;font-size:8px;}
+  .species-tools{padding:0 12px 12px;}
+  .bait-lure-row{display:flex;gap:6px;flex-wrap:wrap;}
+  .bait-chip,.lure-chip{font-family:var(--font-mono);font-size:9px;border:1px solid var(--line);padding:5px 7px;border-radius:999px;color:var(--text-dim);}
+  .bait-chip{border-color:rgba(63,156,147,.45);color:#9bd0ca;}
+  .lure-chip{border-color:rgba(201,162,39,.45);color:#e1c86d;}
+  .chip-label{font-family:var(--font-mono);font-size:9px;color:var(--text-dim);margin:2px 0 5px;text-transform:uppercase;letter-spacing:1px;}
+  .catches-toolbar{padding:4px 14px 10px;display:flex;gap:8px;align-items:center;}
+  .segmented{display:flex;flex:1;background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:3px;}
+  .segment-btn{flex:1;background:none;border:0;color:var(--text-dim);padding:9px 6px;border-radius:5px;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.5px;}
+  .segment-btn.active{background:var(--surface-2);color:var(--brass);}
+  .compact-catches{display:flex;flex-direction:column;gap:8px;padding:0 14px 18px;}
+  .compact-catch{display:flex;min-height:78px;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;cursor:pointer;}
+  .compact-catch .catch-photo{width:86px;height:78px;object-fit:cover;flex:0 0 86px;border-radius:0 0 0 8px;background:#000;}
+  .compact-catch .catch-copy{padding:10px 12px;display:flex;flex:1;min-width:0;flex-direction:column;justify-content:center;}
+  .compact-catch .catch-name{font-family:var(--font-display);font-size:15px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .compact-catch .catch-type{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);margin-top:3px;}
+  .compact-catch .catch-weight{font-family:var(--font-mono);font-size:12px;color:var(--brass);margin-top:4px;}
+  .other-add{width:42px;height:42px;flex:0 0 42px;border-radius:50%;border:1px solid var(--brass);background:var(--surface);color:var(--brass);font-size:20px;}
+  .species-empty{padding:36px 24px;text-align:center;color:var(--text-dim);font-family:var(--font-mono);font-size:12px;}
+  #speciesPhotoInput,#otherCatchPhotoInput{display:none;}
+
+/* ===== Enhanced fishing-app UI ===== */
+:root{--bg:#071827;--surface:#0d2233;--surface-2:#123048;--line:#21435b;--brass:#d8b44a;--teal:#42b8ad;--text:#edf5f7;--text-dim:#8eacbb;--danger:#d4674d;--water:#0a4968;--water-deep:#031521;}
+body{background:radial-gradient(circle at 50% -20%,#174b68 0,#0a263b 38%,#061522 75%);}
+body::-webkit-scrollbar,.screen::-webkit-scrollbar{width:18px;height:18px}
+body::-webkit-scrollbar-track,.screen::-webkit-scrollbar-track{background:rgba(3,21,33,.65)}
+body::-webkit-scrollbar-thumb,.screen::-webkit-scrollbar-thumb{border:5px solid transparent;background-clip:padding-box;background-color:rgba(216,180,74,.72);border-radius:999px;min-height:44px}
+.screen{scrollbar-color:#d8b44a #061522;scrollbar-width:auto}
+#launchExperience{position:fixed;inset:0;z-index:5000;overflow:hidden;background:linear-gradient(#87cbe1 0 46%,#2b92a8 47%,#0a4d6c 62%,#031522 100%);display:flex;align-items:center;justify-content:center;transition:opacity 1.2s ease,visibility 1.2s ease}
+#launchExperience::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,.13),transparent 25%,rgba(0,0,0,.35) 50%,rgba(0,10,20,.7));transition:transform 2.2s ease,opacity 2.2s ease}
+#launchExperience.underwater::before{transform:translateY(-35%);opacity:.75}
+#launchExperience.fade-out{opacity:0;visibility:hidden;pointer-events:none}
+.launch-content{position:relative;z-index:2;text-align:center;padding:28px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.4);transition:transform 1.8s ease,opacity 1s ease}
+#launchExperience.underwater .launch-content{transform:translateY(28vh);opacity:.45}
+.launch-eyebrow{font:10px var(--font-mono);letter-spacing:3px;text-transform:uppercase;opacity:.8;margin-bottom:14px}
+.launch-message{font:clamp(24px,7vw,38px) var(--font-display);letter-spacing:1px;max-width:320px;line-height:1.08}
+.launch-bubbles{position:absolute;inset:0;pointer-events:none}
+.launch-bubbles i{position:absolute;width:6px;height:6px;border:1px solid rgba(255,255,255,.45);border-radius:50%;animation:rise 4s linear infinite;bottom:-20px}
+.launch-bubbles i:nth-child(1){left:18%;animation-delay:.3s}.launch-bubbles i:nth-child(2){left:42%;animation-delay:1.5s}.launch-bubbles i:nth-child(3){left:72%;animation-delay:.8s}.launch-bubbles i:nth-child(4){left:84%;animation-delay:2s}
+@keyframes rise{to{transform:translateY(-105vh);opacity:0}}
+.sinker-scrollbar{position:fixed;right:4px;top:0;width:20px;height:100vh;z-index:1200;pointer-events:none}
+.sinker-scrollbar .sinker{position:absolute;right:1px;top:8%;width:17px;height:30px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.45));transition:top .08s linear}
+.sinker-scrollbar .sinker::before{content:'';position:absolute;left:4px;top:0;width:9px;height:17px;background:#d8b44a;border-radius:50% 50% 42% 42%;border:1px solid #f0d878}
+.sinker-scrollbar .sinker::after{content:'';position:absolute;left:6px;top:15px;width:5px;height:14px;background:#b88f27;clip-path:polygon(0 0,100% 0,65% 100%,35% 100%)}
+.swipe-hint{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);font:9px var(--font-mono);letter-spacing:1px;color:var(--text-dim);opacity:.7;z-index:100;pointer-events:none}
+.species-edit-btn{border:1px solid var(--line);background:transparent;color:var(--text-dim);padding:6px 9px;border-radius:5px;font:9px var(--font-mono);text-transform:uppercase}
+.species-card .species-main{align-items:flex-start}
+.status-bar{width:100%;margin-top:8px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--text-dim);padding:7px 8px;border-radius:5px;display:flex;justify-content:space-between;align-items:center;font:10px var(--font-mono);text-transform:uppercase}
+.status-bar.caught{border-color:rgba(66,184,173,.55);color:#9de0d9;background:rgba(66,184,173,.09)}
+.status-bar.missing{color:#8396a0}
+.status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:currentColor;margin-right:6px}
+.status-left{display:flex;align-items:center}
+.status-hint{opacity:.55;font-size:8px}
+.mini-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mini-info-card{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:7px;padding:9px}
+.mini-info-card b{display:block;font:9px var(--font-mono);text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:5px}
+.mini-info-card span{font-size:12px;line-height:1.35}
+.notes-list{padding:4px 14px 18px;display:flex;flex-direction:column;gap:9px}
+.note-card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px}
+.note-card .note-date{font:9px var(--font-mono);color:var(--brass);margin-bottom:6px}
+.note-card .note-text{font-size:13px;line-height:1.45;white-space:pre-wrap}
+.waypoint-row{display:flex;gap:8px;padding:0 14px 10px}.waypoint-row .btn{margin:0;flex:1}
+.data-credit{padding:12px 14px 22px;color:var(--text-dim);font:9px var(--font-mono);line-height:1.5}
+.data-credit a{color:var(--teal)}
+#weather-summary{background:rgba(255,255,255,.03);border:1px solid var(--line);padding:8px 10px;border-radius:7px;line-height:1.45}
+.weather-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 16px 10px}
+.weather-card{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:8px;text-align:center}.weather-card b{display:block;font:9px var(--font-mono);color:var(--text-dim);text-transform:uppercase}.weather-card span{display:block;margin-top:4px;font:13px var(--font-mono);color:var(--brass)}
+.filter-chip[data-category="Traces"]{border-color:rgba(216,180,74,.35)}
+@media(max-width:390px){.weather-grid{grid-template-columns:repeat(2,1fr)}.mini-card-grid{grid-template-columns:1fr}}
+
+
+/* ---------- Species detail view ---------- */
+.species-detail-overlay{position:fixed;inset:0;background:rgba(3,13,23,.94);z-index:4200;display:none;overflow:auto;padding-bottom:90px;}
+.species-detail-overlay.active{display:block;}
+.species-detail-head{position:sticky;top:0;z-index:2;background:rgba(7,24,39,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.species-detail-head .back{width:40px;height:40px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text);font-size:22px;}
+.species-detail-head h2{margin:0;font-family:var(--font-display);text-transform:uppercase;font-size:20px;letter-spacing:.7px;}
+.species-detail-head small{display:block;color:var(--text-dim);font:9px var(--font-mono);margin-top:3px;}
+.species-detail-body{padding:14px 16px;}
+.detail-hero{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.detail-hero img,.detail-hero .empty{width:96px;height:96px;object-fit:cover;border-radius:8px;background:var(--surface-2);flex:0 0 96px;}
+.detail-hero .empty{display:flex;align-items:center;justify-content:center;font:9px var(--font-mono);color:var(--text-dim);text-align:center;}
+.detail-section{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;}
+.detail-section h3{margin:0 0 9px;font:10px var(--font-mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--brass);}
+.detail-summary{font-size:13px;line-height:1.5;color:var(--text-dim);}
+.detail-table{width:100%;border-collapse:collapse;font-size:12px;}
+.detail-table th,.detail-table td{padding:8px 5px;border-bottom:1px solid rgba(33,67,91,.65);text-align:left;vertical-align:top;}
+.detail-table th{font:9px var(--font-mono);text-transform:uppercase;color:var(--text-dim);letter-spacing:.5px;}
+.detail-table td strong{color:var(--text);}
+.activity-chart{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;height:120px;align-items:end;padding-top:8px;}
+.activity-col{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;}
+.activity-bar{width:100%;max-width:28px;border-radius:4px 4px 2px 2px;background:linear-gradient(to top,var(--teal),#8bd9d2);min-height:6px;}
+.activity-col span{font:8px var(--font-mono);color:var(--text-dim);}
+.activity-col b{font:8px var(--font-mono);color:var(--brass);}
+.detail-badges{display:flex;gap:7px;flex-wrap:wrap;}
+.detail-badge{padding:6px 8px;border:1px solid var(--line);border-radius:999px;font:9px var(--font-mono);color:var(--text-dim);}
+.detail-badge.good{border-color:rgba(66,184,173,.5);color:#9de0d9;}
+.detail-edit{margin-top:12px;}
+/* ---------- Species catalogue ---------- */
+.catalog-filter-row{display:flex;gap:6px;overflow-x:auto;padding:4px 14px 8px;scrollbar-width:none}.catalog-filter-row::-webkit-scrollbar{display:none}.catalog-filter{border:1px solid var(--line);background:var(--surface);color:var(--text-dim);padding:8px 13px;border-radius:999px;font:10px var(--font-mono);text-transform:uppercase;letter-spacing:.6px;white-space:nowrap}.catalog-filter.active{background:var(--brass);border-color:var(--brass);color:#071827;font-weight:700}.catalog-list{display:flex;flex-direction:column;gap:8px;padding:0 14px 10px}.catalog-card{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:9px;cursor:pointer}.catalog-thumb{width:56px;height:56px;flex:0 0 56px;border-radius:7px;object-fit:cover;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font:8px var(--font-mono);text-align:center}.catalog-copy{min-width:0;flex:1}.catalog-name{font:15px var(--font-display);text-transform:uppercase;letter-spacing:.5px}.catalog-meta{font:9px var(--font-mono);color:var(--brass);text-transform:uppercase;margin-top:3px}.catalog-note{font-size:11px;color:var(--text-dim);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.catalog-add{width:36px;height:36px;border-radius:50%;border:1px solid var(--brass);background:transparent;color:var(--brass);font-size:20px;flex:0 0 36px}.catalog-empty{padding:15px 8px;color:var(--text-dim);font:10px var(--font-mono);text-align:center}.catalog-detail-photo{width:100%;max-height:240px;object-fit:cover;border-radius:9px;background:var(--surface-2);margin-bottom:12px}.catalog-type-badge{display:inline-block;padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--brass);font:9px var(--font-mono);text-transform:uppercase}
+
+
+</style>
+<style id="catalogue-label-fix">
+#catalogTabs{display:flex!important;gap:8px!important;overflow-x:auto;padding:6px 2px 10px}
+#catalogTabs button{min-width:72px!important;min-height:42px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;white-space:nowrap!important}
+#catalogTabs button .cat-label{display:inline!important;visibility:visible!important;opacity:1!important;font-weight:700!important}
+</style></head>
+<body>
+<div id="launchExperience">
+  <div class="launch-bubbles"><i></i><i></i><i></i><i></i></div>
+  <div class="launch-content">
+    <div class="launch-eyebrow">CATCH LOG</div>
+    <div class="launch-message">I see you finally caught something</div>
+  </div>
+</div>
+<div class="sinker-scrollbar"><div class="sinker"></div></div>
+<div class="swipe-hint">SWIPE ← → TO NAVIGATE</div>
+<div id="app">
+
+  <!-- CAMERA -->
+  <div class="screen active" id="camera-screen">
+    <div class="topbar" style="position:absolute; top:0; left:0; right:0;">
+      <div>
+        <div class="eyebrow">CATCH LOG</div>
+        <h1>New Catch</h1>
+      </div>
+    </div>
+    <div class="camera-hero">
+      <div class="shutter-ring" id="shutterBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--brass)" stroke-width="1.6"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.6"/></svg>
+      </div>
+      <div class="camera-caption">Tap to photograph your catch.<br>Time and <b>GPS location</b> are logged automatically to your Draft tab.</div>
+    </div>
+    <input type="file" accept="image/*" capture="environment" id="cameraInput">
+  </div>
+
+  <!-- DRAFT -->
+  <div class="screen" id="draft-screen">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">TO FINISH</div>
+        <h1>Draft</h1>
+      </div>
+    </div>
+    <div class="ticket-list" id="draftList"></div>
+  </div>
+
+  <!-- SPECIES -->
+  <div class="screen" id="species-screen">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">SPECIES DATABASE</div>
+        <h1>Species</h1>
+      </div>
+    </div>
+    <div class="species-search-row">
+      <div class="species-search-wrap">
+        <span class="species-search-icon">⌕</span>
+        <input id="speciesSearchInput" class="species-search" type="search" placeholder="Search fish, baits, lures..." autocomplete="off">
+        <button id="clearSpeciesSearch" class="species-search-clear" type="button" aria-label="Clear search">×</button>
+      </div>
+      <button id="addSpeciesBtn" class="add-species-btn" type="button" aria-label="Add a species" title="Add species">+</button>
+    </div>
+    <div id="speciesSearchCount" class="species-search-count"></div>
+    <div class="catalog-filter-row" id="speciesCatalogFilters">
+      <button class="catalog-filter active" data-catalog-category="All">All</button>
+      <button class="catalog-filter" data-catalog-category="Fish">Fish</button>
+      <button class="catalog-filter" data-catalog-category="Traces">Traces</button>
+      <button class="catalog-filter" data-catalog-category="Baits">Bait</button>
+    </div>
+    <div class="catalog-list" id="speciesCatalogList"></div>
+    <div class="species-list" id="speciesListCards"></div>
+    <input type="file" accept="image/*" id="speciesPhotoInput">
+    <input type="file" accept="image/*" id="catalogPhotoInput">
+  </div>
+
+  <!-- CATCHES -->
+  <div class="screen" id="log-screen">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow" id="logCount">0 CATCHES</div>
+        <h1>My Catches</h1>
+      </div>
+      <button class="other-add" id="addOtherCatchBtn" title="Add other's catch">+</button>
+    </div>
+    <div class="catches-toolbar">
+      <div class="segmented">
+        <button class="segment-btn active" data-catch-mode="mine">My Catches</button>
+        <button class="segment-btn" data-catch-mode="others">Other's Catches</button>
+      </div>
+    </div>
+    <div class="compact-catches" id="logGrid"></div>
+    <input type="file" accept="image/*" id="otherCatchPhotoInput">
+  </div>
+
+  <!-- ANGLER LOG -->
+  <div class="screen" id="angler-log-screen">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">FISHING DATABASE</div>
+        <h1>Angler Log</h1>
+      </div>
+      <div id="weather-summary" style="font-size: 0.75rem; color: var(--text-dim); margin-top: 8px;">Fetching weather...</div>
+    </div>
+    
+    <div id="map" style="height: 230px; width: calc(100% - 32px); border-radius: 8px; margin: 12px 16px; border: 1px solid var(--line); display: block;"></div>
+    <div class="waypoint-row"><button class="btn btn-secondary" id="saveWaypointBtn" type="button">＋ Save Current Waypoint</button><button class="btn btn-secondary" id="locateBtn" type="button">◎ Live Location</button></div>
+    <div class="weather-grid" id="weatherGrid"><div class="weather-card"><b>Air</b><span>—</span></div><div class="weather-card"><b>Sea</b><span>—</span></div><div class="weather-card"><b>Wind</b><span>—</span></div><div class="weather-card"><b>Waves</b><span>—</span></div><div class="weather-card"><b>Tide</b><span>—</span></div><div class="weather-card"><b>Source</b><span>Live</span></div></div>
+    
+    <input type="text" id="searchInput" placeholder="Search species, bait, lures..." 
+      style="width: calc(100% - 32px); padding: 8px 16px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface-2); color: var(--text); margin: 12px 16px 8px; font-size: 14px;">
+    
+    <div class="filter-bar" style="display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 12px; margin-bottom: 0;">
+      <button class="filter-chip active" data-category="All" style="background: var(--brass); color: #000; border: none; padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; white-space: nowrap; cursor: pointer; font-weight: 600;">All</button>
+      <button class="filter-chip" data-category="Fish" style="background: var(--line); color: var(--text); border: none; padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; white-space: nowrap; cursor: pointer;">Fish</button>
+      <button class="filter-chip" data-category="Baits" style="background: var(--line); color: var(--text); border: none; padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; white-space: nowrap; cursor: pointer;">Baits</button>
+      <button class="filter-chip" data-category="Traces" style="background: var(--line); color: var(--text); border: none; padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; white-space: nowrap; cursor: pointer;">Traces</button>
+      <button class="filter-chip" data-category="Lures" style="background: var(--line); color: var(--text); border: none; padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; white-space: nowrap; cursor: pointer;">Lures</button>
+    </div>
+
+    <div id="speciesList" style="padding: 0 16px 120px; display: flex; flex-direction: column; gap: 12px;"></div>
+    
+    <div id="tab-catches" style="display: none; padding: 0 16px 120px;">
+      <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <button class="filter-chip active" id="btn-my-catches" style="background: var(--brass); color: #000; border: none; padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; cursor: pointer; font-weight: 600;">My Catches</button>
+        <button class="filter-chip" id="btn-others-catches" style="background: var(--line); color: var(--text); border: none; padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; cursor: pointer;">Other's Catches</button>
+      </div>
+      <div id="catchesList"></div>
+    </div>
+  </div>
+
+  <!-- SPECIES DETAIL -->
+  <div class="species-detail-overlay" id="catalogDetailOverlay"><div class="species-detail-head"><button class="back" id="closeCatalogDetail">‹</button><div><h2 id="catalogDetailTitle">Catalogue Item</h2><small id="catalogDetailType"></small></div></div><div class="species-detail-body" id="catalogDetailBody"></div></div>
+<div class="overlay" id="catalogEditorOverlay"><div class="overlay-header"><button class="close-btn" id="closeCatalogEditor">✕</button><h2 id="catalogEditorTitle">Add Catalogue Item</h2><span></span></div><div class="overlay-body"><div class="field"><label>Type</label><select id="catalogTypeInput"><option value="Baits">Bait</option><option value="Traces">Trace</option><option value="Fish">Fish</option></select></div><div class="field"><label>Name</label><input id="catalogNameInput" placeholder="e.g. Sardine or Sliding Trace"></div><div class="field"><label>Notes / information</label><textarea id="catalogNoteInput" placeholder="What is it, when to use it, how to rig it, tips..."></textarea></div><div class="field"><label>Photo</label><button class="btn btn-secondary" id="catalogPhotoBtn">📷 Add / change photo</button><input type="file" accept="image/*" id="catalogEditorPhotoInput" style="display:none"></div><img id="catalogEditorPhotoPreview" class="catalog-detail-photo" style="display:none" alt="Catalogue photo"><button class="btn btn-primary" id="saveCatalogItem">Save to catalogue</button><button class="btn btn-danger" id="deleteCatalogItem" style="display:none">Delete item</button></div></div>
+<div class="species-detail-overlay" id="speciesDetailOverlay">
+    <div class="species-detail-head">
+      <button class="back" id="closeSpeciesDetail" type="button">‹</button>
+      <div><h2 id="speciesDetailTitle">Species</h2><small id="speciesDetailScientific"></small></div>
+    </div>
+    <div class="species-detail-body" id="speciesDetailBody"></div>
+  </div>
+
+  <!-- SPECIES EDITOR -->
+  <div class="overlay" id="speciesEditorOverlay">
+    <div class="overlay-header"><div class="eyebrow" style="font-family:var(--font-mono);font-size:10px;color:var(--brass);">EDIT SPECIES</div><button class="close-btn" id="closeSpeciesEditor">×</button></div>
+    <div class="overlay-body">
+      <div class="field"><label>Name</label><input id="speciesEditName"></div>
+      <div class="field"><label>Type</label><input id="speciesEditType"></div>
+      <div class="field"><label>Scientific name</label><input id="speciesEditScientific"></div>
+      <div class="field"><label>Description</label><textarea id="speciesEditDescription"></textarea></div>
+      <div class="field"><label>Baits</label><input id="speciesEditBaits" placeholder="Squid, Sardine, Crab"></div>
+      <div class="field"><label>Lures</label><input id="speciesEditLures" placeholder="Rapala, Spoon"></div>
+      <div class="field"><label>Trace / Method</label><input id="speciesEditTrace"></div>
+      <div class="field"><label>Best time</label><input id="speciesEditBestTime" placeholder="Dawn & late afternoon"></div>
+      <div class="field"><label>Best tide</label><input id="speciesEditTide" placeholder="Incoming tide / moving water"></div>
+      <div class="field"><label>Best weather</label><input id="speciesEditWeather" placeholder="Light wind, clean water..."></div>
+      <div class="field"><label>Water temperature / conditions</label><input id="speciesEditWaterTemp" placeholder="Warm, stable water"></div>
+      <div class="field"><label>Moon guidance</label><input id="speciesEditMoon" placeholder="Secondary factor; focus on tide/current"></div>
+      <button class="btn btn-primary" id="saveSpeciesEdit">Save Species</button>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="screen" id="notes-screen">
+    <div class="topbar">
+      <div><div class="eyebrow">FIELD NOTES</div><h1>Notes</h1></div>
+    </div>
+    <div class="overlay-body" style="padding-top:4px;">
+      <div class="field"><label>New note</label><textarea id="newNoteText" placeholder="Record a spot, tactic, tide observation, rig idea..."></textarea></div>
+      <button class="btn btn-primary" id="saveNoteBtn">Save Note</button>
+      <button class="btn btn-secondary" id="notifyBtn" type="button">Enable Daily Fishing Notifications</button>
+    </div>
+    <div class="notes-list" id="notesList"></div>
+    <div class="data-credit">Species starter data is based on Southern African marine-fish references. The historical <em>The Sea Fishes of Southern Africa</em> record is available through Biodiversity Heritage Library; this app does not copy its protected illustrations. <a href="https://www.biodiversitylibrary.org/item/265240" target="_blank" rel="noopener">View source</a>.</div>
+  </div>
+
+  <!-- NAV -->
+  <div class="navbar">
+    <button class="nav-btn active" data-tab="camera">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+      <span>Camera</span>
+    </button>
+    <button class="nav-btn" data-tab="draft" style="position:relative;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="17" rx="1.5"/><path d="M9 4h6v2.5H9z" fill="currentColor" stroke="none"/><path d="M8 11h8M8 14h8M8 17h5"/></svg>
+      <span>Draft</span>
+      <span class="nav-badge" id="draftBadge" style="display:none;">0</span>
+    </button>
+    <button class="nav-btn" data-tab="species">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12c3-5 15-5 18 0-3 5-15 5-18 0z"/><circle cx="16" cy="12" r="1" fill="currentColor" stroke="none"/><path d="M3 12l-2-2.5M3 12l-2 2.5"/></svg>
+      <span>Species</span>
+    </button>
+    <button class="nav-btn" data-tab="log">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 12h8M8 15h5"/></svg>
+      <span>Catches</span>
+    </button>
+    <button class="nav-btn" data-tab="angler-log">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M8 8h8v8H8z"/><circle cx="12" cy="12" r="2"/></svg>
+      <span>Angler Log</span>
+    </button>
+    <button class="nav-btn" data-tab="notes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      <span>Notes</span>
+    </button>
+  </div>
+
+  <div class="flash-status" id="flashStatus"></div>
+
+  <!-- DRAFT EDITOR OVERLAY -->
+  <div class="overlay" id="editorOverlay">
+    <div class="overlay-header">
+      <div class="eyebrow" style="font-family:var(--font-mono); font-size:10px; color:var(--brass);">DRAFT ENTRY</div>
+      <button class="close-btn" id="closeEditor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="overlay-body">
+      <img class="overlay-photo" id="editorPhoto" src="">
+
+      <div class="field-row">
+        <div class="field">
+          <label>Species</label>
+          <input list="speciesDatalist" id="fSpecies" placeholder="e.g. Garrick / Leerfish">
+          <datalist id="speciesDatalist">
+            <option value="Garrick (Leerfish)"><option value="Kob"><option value="Shad (Elf)">
+            <option value="Grunter"><option value="King Mackerel (Couta)"><option value="Snapper Salmon">
+            <option value="Stumpnose"><option value="Zebra"><option value="Bronze Bream">
+          </datalist>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Weight</label><input id="fWeight" placeholder="e.g. 2.4 kg"></div>
+        <div class="field"><label>Length</label><input id="fLength" placeholder="e.g. 58 cm"></div>
+      </div>
+      <div class="field">
+        <label>Bait Used</label>
+        <input id="fBait" placeholder="e.g. Live mullet, sardine chunk">
+      </div>
+      <div class="field">
+        <label>Trace / Method</label>
+        <input id="fMethod" placeholder="e.g. Sliding trace, spinning, fly">
+      </div>
+      <div class="field">
+        <label>Setup</label>
+        <input id="fSetup" placeholder="e.g. 30lb braid, 6/0 circle hook">
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Tide</label>
+          <select id="fTide">
+            <option value="">— select —</option>
+            <option>Low</option><option>Rising</option><option>High</option><option>Falling</option><option>Slack</option>
+          </select>
+        </div>
+        <div class="field"><label>Time</label><input type="datetime-local" id="fTime"></div>
+      </div>
+      <div class="field">
+        <label>Weather</label>
+        <input id="fWeather" placeholder="Tap Sync, or type manually">
+      </div>
+      <button class="btn btn-ghost" id="syncBtn" type="button">↻ Sync Weather (needs WiFi)</button>
+      <div class="sync-status" id="syncStatus"></div>
+
+      <div class="field">
+        <label>Location</label>
+        <input id="fLocationLabel" placeholder="e.g. Umgeni River Mouth">
+      </div>
+      <div class="field">
+        <label>Notes</label>
+        <textarea id="fNotes" placeholder="Anything else worth remembering"></textarea>
+      </div>
+
+      <button class="btn btn-primary" id="saveDraftBtn">Save to Fish Log</button>
+      <button class="btn btn-danger" id="deleteDraftBtn">Discard Draft</button>
+    </div>
+  </div>
+
+  <!-- OTHER'S CATCH EDITOR -->
+  <div class="overlay" id="otherCatchOverlay">
+    <div class="overlay-header">
+      <div class="eyebrow" style="font-family:var(--font-mono);font-size:10px;color:var(--brass);">OTHER'S CATCH</div>
+      <button class="close-btn" id="closeOtherCatch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="overlay-body">
+      <img class="overlay-photo" id="otherCatchPhotoPreview" src="">
+      <button class="btn btn-secondary" id="chooseOtherCatchPhoto" type="button">Choose Photo</button>
+      <div class="field"><label>Fish Name</label><input id="otherSpecies" placeholder="e.g. Garrick"></div>
+      <div class="field"><label>Type</label><input id="otherType" placeholder="e.g. Shore catch"></div>
+      <div class="field"><label>Weight</label><input id="otherWeight" placeholder="e.g. 3.2 kg"></div>
+      <div class="field"><label>Notes</label><textarea id="otherNotes" placeholder="Optional catch details"></textarea></div>
+      <button class="btn btn-primary" id="saveOtherCatch">Save Other's Catch</button>
+    </div>
+  </div>
+
+  <!-- CATCH DETAIL OVERLAY -->
+  <div class="overlay" id="detailOverlay">
+    <div class="overlay-header">
+      <div class="eyebrow" style="font-family:var(--font-mono); font-size:10px; color:var(--brass);">CATCH RECORD</div>
+      <button class="close-btn" id="closeDetail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="overlay-body" id="detailBody"></div>
+  </div>
+
+</div>
+
+<script>
+// ---------- Storage helpers ----------
+async function loadDrafts(){
+  try{ return JSON.parse(localStorage.getItem('drafts') || '[]'); }
+  catch(e){ return []; }
+}
+async function saveDrafts(arr){
+  try{ localStorage.setItem('drafts', JSON.stringify(arr)); }
+  catch(e){ console.error('draft save failed', e); toast('Could not save draft'); }
+}
+async function loadCatches(){
+  try{ return JSON.parse(localStorage.getItem('catches') || '[]'); }
+  catch(e){ return []; }
+}
+async function saveCatches(arr){
+  try{ localStorage.setItem('catches', JSON.stringify(arr)); }
+  catch(e){ console.error('catch save failed', e); toast('Could not save to log'); }
+}
+
+// ---------- Utility ----------
+function toast(msg){
+  const el = document.getElementById('flashStatus');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 1800);
+}
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,8); }
+function fmtDate(ts){
+  const d = new Date(ts);
+  return d.toLocaleDateString(undefined,{day:'2-digit',month:'short',year:'numeric'}) + ' · ' +
+         d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+}
+function compressImage(file){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const maxW = 900;
+        const scale = Math.min(1, maxW/img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width*scale; canvas.height = img.height*scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.65));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+function getLocation(){
+  return new Promise((resolve)=>{
+    if(!navigator.geolocation){ resolve(null); return; }
+    navigator.geolocation.getCurrentPosition(
+      pos => resolve({lat: pos.coords.latitude, lng: pos.coords.longitude}),
+      () => resolve(null),
+      {timeout: 8000, enableHighAccuracy:true}
+    );
+  });
+}
+
+// ---------- Tabs ----------
+function showTab(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(name+'-screen').classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  if(name==='draft') renderDraftList();
+  if(name==='species') renderSpecies();
+  if(name==='log') renderLogGrid();
+  if(name==='angler-log') { renderAnglerSpecies(); initMapAndWeather(); }
+  if(name==='notes') renderNotes();
+  requestAnimationFrame(updateSinker);
+}
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=> showTab(btn.dataset.tab));
+});
+
+// ---------- Camera capture ----------
+const shutterBtn = document.getElementById('shutterBtn');
+const cameraInput = document.getElementById('cameraInput');
+shutterBtn.addEventListener('click', ()=> cameraInput.click());
+cameraInput.addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  toast('Saving catch…');
+  const [photo, loc] = await Promise.all([compressImage(file), getLocation()]);
+  const drafts = await loadDrafts();
+  drafts.unshift({
+    id: uid(), photo, ts: Date.now(),
+    lat: loc ? loc.lat : null, lng: loc ? loc.lng : null,
+    species:'', weight:'', length:'', bait:'', method:'', setup:'',
+    tide:'', weather:'', locationLabel:'', notes:''
+  });
+  await saveDrafts(drafts);
+  cameraInput.value = '';
+  toast(loc ? '✓ Saved to Draft (with GPS)' : '✓ Saved to Draft (no GPS signal)');
+  updateBadge();
+});
+
+// ---------- Draft list ----------
+let currentDraftId = null;
+async function renderDraftList(){
+  const drafts = await loadDrafts();
+  const list = document.getElementById('draftList');
+  if(drafts.length===0){
+    list.innerHTML = `<div class="empty-state"><p>No drafts yet.<br>Take a photo of your next catch to start one.</p></div>`;
+    return;
+  }
+  list.innerHTML = drafts.map(d => `
+    <div class="ticket" data-id="${esc(d.id)}">
+      <img class="thumb" src="${d.photo}">
+      <div class="body">
+        <div class="row1">
+          <div class="species ${d.species?'':'empty'}">${d.species ? esc(d.species) : 'Needs details'}</div>
+        </div>
+        <div class="meta">${fmtDate(d.ts)}</div>
+        <div class="meta">${d.lat!=null ? d.lat.toFixed(4)+', '+d.lng.toFixed(4) : 'No GPS'}</div>
+        <span class="tag warn">Tap to complete</span>
+      </div>
+    </div>`).join('');
+  list.querySelectorAll('.ticket').forEach(t=>{
+    t.addEventListener('click', ()=> openEditor(t.dataset.id));
+  });
+}
+function updateBadge(){
+  loadDrafts().then(drafts=>{
+    const badge = document.getElementById('draftBadge');
+    if(!badge) return;
+    if(drafts.length>0){ badge.style.display='flex'; badge.textContent = drafts.length; }
+    else badge.style.display='none';
+  });
+}
+
+// ---------- Draft editor overlay ----------
+async function openEditor(id){
+  const drafts = await loadDrafts();
+  const d = drafts.find(x=>x.id===id);
+  if(!d) return;
+  currentDraftId = id;
+  document.getElementById('editorPhoto').src = d.photo;
+  document.getElementById('fSpecies').value = d.species || '';
+  document.getElementById('fWeight').value = d.weight || '';
+  document.getElementById('fLength').value = d.length || '';
+  document.getElementById('fBait').value = d.bait || '';
+  document.getElementById('fMethod').value = d.method || '';
+  document.getElementById('fSetup').value = d.setup || '';
+  document.getElementById('fTide').value = d.tide || '';
+  document.getElementById('fWeather').value = d.weather || '';
+  document.getElementById('fLocationLabel').value = d.locationLabel || '';
+  document.getElementById('fNotes').value = d.notes || '';
+  const dt = new Date(d.ts);
+  dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
+  document.getElementById('fTime').value = dt.toISOString().slice(0,16);
+  document.getElementById('syncStatus').textContent = '';
+  document.getElementById('editorOverlay').classList.add('active');
+}
+document.getElementById('closeEditor').addEventListener('click', ()=>{
+  document.getElementById('editorOverlay').classList.remove('active');
+});
+
+document.getElementById('saveDraftBtn').addEventListener('click', async ()=>{
+  const drafts = await loadDrafts();
+  const idx = drafts.findIndex(x=>x.id===currentDraftId);
+  if(idx===-1) return;
+  const d = drafts[idx];
+  d.species = document.getElementById('fSpecies').value.trim();
+  d.weight = document.getElementById('fWeight').value.trim();
+  d.length = document.getElementById('fLength').value.trim();
+  d.bait = document.getElementById('fBait').value.trim();
+  d.method = document.getElementById('fMethod').value.trim();
+  d.setup = document.getElementById('fSetup').value.trim();
+  d.tide = document.getElementById('fTide').value;
+  d.weather = document.getElementById('fWeather').value.trim();
+  d.locationLabel = document.getElementById('fLocationLabel').value.trim();
+  d.notes = document.getElementById('fNotes').value.trim();
+  const tVal = document.getElementById('fTime').value;
+  if(tVal) d.ts = new Date(tVal).getTime();
+
+  if(!d.species){
+    toast('Add a species before saving');
+    return;
+  }
+
+  drafts.splice(idx,1);
+  await saveDrafts(drafts);
+  const catches = await loadCatches();
+  catches.unshift(d);
+  await saveCatches(catches);
+
+  document.getElementById('editorOverlay').classList.remove('active');
+  toast('✓ Added to Fish Log');
+  updateBadge();
+  renderDraftList();
+  showTab('log');
+});
+
+document.getElementById('deleteDraftBtn').addEventListener('click', async ()=>{
+  const drafts = await loadDrafts();
+  const idx = drafts.findIndex(x=>x.id===currentDraftId);
+  if(idx===-1) return;
+  drafts.splice(idx,1);
+  await saveDrafts(drafts);
+  document.getElementById('editorOverlay').classList.remove('active');
+  toast('Draft discarded');
+  updateBadge();
+  renderDraftList();
+});
+
+// Best-effort weather sync for a single draft — needs the page to have real internet access.
+document.getElementById('syncBtn').addEventListener('click', async ()=>{
+  const drafts = await loadDrafts();
+  const d = drafts.find(x=>x.id===currentDraftId);
+  const status = document.getElementById('syncStatus');
+  if(!d || d.lat==null){
+    status.textContent = 'No GPS on this entry — enter weather manually.';
+    return;
+  }
+  status.textContent = 'Contacting weather service…';
+  try{
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${d.lat}&longitude=${d.lng}&current=temperature_2m,windspeed_10m,weathercode&timezone=auto`;
+    const res = await fetch(url);
+    if(!res.ok) throw new Error('bad response');
+    const data = await res.json();
+    const c = data.current;
+    document.getElementById('fWeather').value = `${Math.round(c.temperature_2m)}°C, wind ${Math.round(c.windspeed_10m)}km/h`;
+    status.textContent = '✓ Synced just now.';
+  }catch(err){
+    status.textContent = "Couldn't reach the weather service from here — enter it manually for now.";
+  }
+});
+
+// ---------- Species database ----------
+const SPECIES = [
+  {name:'Garrick (Leerfish)',type:'Gamefish',scientific:'Lichia amia',description:'Fast coastal predator commonly targeted around surf, estuaries and structure.',baits:'Live mullet, sardine, squid',lures:'Rapala, paddle tail, spoon',trace:'Wire/mono leader; spinning or live-bait trace'},
+  {name:'Dusky Kob',type:'Gamefish',scientific:'Argyrosomus japonicus',description:'Large inshore predator associated with surf, estuaries and deeper channels.',baits:'Sardine, squid, crab',lures:'Paddle tail, spoon, Rapala',trace:'Sliding trace or fish-finder rig'},
+  {name:'Silver Kob',type:'Gamefish',scientific:'Argyrosomus inodorus',description:'Southern African kob species found in coastal waters and estuaries.',baits:'Sardine, squid, chokka',lures:'Paddle tail, spoon',trace:'Sliding sinker or bait trace'},
+  {name:'Shad (Elf)',type:'Gamefish',scientific:'Pomatomus saltatrix',description:'Aggressive schooling predator often encountered in surf and around baitfish.',baits:'Sardine, mackerel',lures:'Spoon, Rapala, fly',trace:'Short bite-resistant trace'},
+  {name:'Spotted Grunter',type:'Estuary',scientific:'Pomadasys commersonnii',description:'Estuarine and inshore species frequently taken on natural baits.',baits:'Prawn, crab, mussel, sardine',lures:'Small paddle tail, crankbait',trace:'Light sliding trace'},
+  {name:'King Mackerel (Couta)',type:'Gamefish',scientific:'Scomberomorus commerson',description:'Powerful pelagic predator usually associated with warm coastal waters and baitfish.',baits:'Mackerel, sardine',lures:'Rapala, spoon, fly',trace:'Wire trace with strong swivel'},
+  {name:'Queen Mackerel',type:'Gamefish',scientific:'Scomberomorus plurilineatus',description:'Fast pelagic predator commonly associated with bait schools.',baits:'Mackerel, sardine',lures:'Spoon, Rapala',trace:'Wire or heavy fluorocarbon'},
+  {name:'Geelbek',type:'Gamefish',scientific:'Atractoscion aequidens',description:'Large predatory croaker associated with deeper coastal structure.',baits:'Sardine, squid, mackerel',lures:'Jig, paddle tail',trace:'Heavy sliding or drop-shot trace'},
+  {name:'Snapper Salmon',type:'Gamefish',scientific:'Polysteganus undulosus',description:'Reef-associated sparid and important South African linefish.',baits:'Sardine, squid, mussel',lures:'Paddle tail, jig',trace:'Bottom trace'},
+  {name:'Blacktail',type:'Reef',scientific:'Diplodus capensis',description:'Common rocky-shore sparid often caught around reef and kelp.',baits:'Mussel, prawn, squid',lures:'Small spoon, fly',trace:'Light bottom trace'},
+  {name:'Bronze Bream',type:'Reef',scientific:'Pachymetopon grande',description:'Reef-associated bream found around rocky structure.',baits:'Mussel, prawn, squid',lures:'Small paddle tail',trace:'Light bait trace'},
+  {name:'White Steenbras',type:'Estuary',scientific:'Lithognathus lithognathus',description:'Large surf and estuary bream with strong bottom-feeding behaviour.',baits:'Sand prawn, crab, mussel',lures:'Small paddle tail',trace:'Sliding trace'},
+  {name:'Stumpnose',type:'Reef',scientific:'Rhabdosargus sarba',description:'Bream associated with reefs, estuaries and coastal structure.',baits:'Mussel, prawn, crab',lures:'Fly, small spoon',trace:'Light bottom trace'},
+  {name:'Zebra',type:'Reef',scientific:'Diplodus cervinus hottentotus',description:'Rocky-reef bream often found around shallow structure.',baits:'Mussel, prawn, squid',lures:'Small fly',trace:'Light trace'},
+  {name:'Black Musselcracker',type:'Reef',scientific:'Cymatoceps nasutus',description:'Large reef predator associated with rocky structure.',baits:'Mussel, squid, crab',lures:'Heavy jig',trace:'Heavy leader and bottom trace'},
+  {name:'Red Roman',type:'Reef',scientific:'Chrysoblephus laticeps',description:'Deep reef sparid and prized South African linefish.',baits:'Sardine, squid, mussel',lures:'Jig, paddle tail',trace:'Heavy bottom trace'},
+  {name:'Hottentot',type:'Reef',scientific:'Pachymetopon blochii',description:'Common reef bream associated with rocky coastal habitats.',baits:'Mussel, prawn, squid',lures:'Fly, small spoon',trace:'Light bottom trace'},
+  {name:'Yellowtail',type:'Gamefish',scientific:'Seriola lalandi',description:'Strong pelagic gamefish commonly targeted around structure and current.',baits:'Mackerel, sardine',lures:'Rapala, spoon, fly',trace:'Heavy fluorocarbon or wire'},
+  {name:'Kingfish',type:'Gamefish',scientific:'Carangoides spp.',description:'Active coastal predator often found around current and structure.',baits:'Sardine, mackerel',lures:'Paddle tail, spoon, Rapala',trace:'Heavy leader'},
+  {name:'Cape Stumpnose',type:'Reef',scientific:'Rhabdosargus holubi',description:'Southern African estuarine and coastal bream.',baits:'Mussel, prawn, crab',lures:'Fly, small spoon',trace:'Light bottom trace'},
+  {name:'White Mussel',type:'Baits',scientific:'Donax spp.',description:'Common natural bait used for surf and estuary species.',baits:'White mussel',lures:'',trace:'Short bait trace'},
+  {name:'Fresh Prawns',type:'Baits',scientific:'Various',description:'Natural bait for estuary and surf species.',baits:'Fresh prawn',lures:'',trace:'Light bait trace'}
+];
+const OPTIMAL_BAITS = ['Squid','Sardine','Mackerel','Crab','Mussel'];
+const OPTIMAL_LURES = ['Rapala','Fly','Paddle Tail','Spoon'];
+let selectedSpeciesForPhoto = '';
+let catchMode = 'mine';
+
+async function loadSpeciesProfiles(){
+  try{ return JSON.parse(localStorage.getItem('speciesProfiles') || '{}'); }
+  catch(e){ return {}; }
+}
+async function saveSpeciesProfiles(obj){
+  try{ localStorage.setItem('speciesProfiles', JSON.stringify(obj)); }
+  catch(e){ console.error('species profile save failed',e); toast('Could not save species photo'); }
+}
+function esc(v){
+  return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+async function loadCustomSpecies(){try{return JSON.parse(localStorage.getItem('customSpecies')||'[]')}catch(e){return[]}}
+async function saveCustomSpecies(v){localStorage.setItem('customSpecies',JSON.stringify(v))}
+
+async function renderSpecies(){
+  const profiles=await loadSpeciesProfiles();
+  const catches=await loadCatches();
+  const custom=await loadCustomSpecies();
+  const root=document.getElementById('speciesListCards');
+  const query=(document.getElementById('speciesSearchInput')?.value||'').trim().toLowerCase();
+  const all=[...SPECIES,...custom];
+  const unique=[]; const seen=new Set();
+  all.forEach(s=>{const key=(s.name||'').trim().toLowerCase(); if(key && !seen.has(key)){seen.add(key);unique.push(s);}});
+  const filtered=unique.filter(s=>{
+    if(!query)return true;
+    const p=profiles[s.name]||{};
+    return [s.name,s.type,s.scientific,s.description,s.baits,s.lures,s.trace,p.name,p.type,p.scientific,p.description,p.baits,p.lures,p.trace]
+      .filter(Boolean).join(' ').toLowerCase().includes(query);
+  });
+  const count=document.getElementById('speciesSearchCount');
+  if(count) count.textContent=query ? `${filtered.length} result${filtered.length===1?'':'s'} for “${query}”` : `${unique.length} species`;
+  root.innerHTML=filtered.length ? filtered.map((s,i)=>{
+    const p=profiles[s.name]||{};
+    const caught=!!p.photo || catches.some(c=>c.species===s.name && c.photo) || p.manualStatus===true;
+    const photo=p.photo||'';
+    const baits=p.baits||s.baits||'Squid, Sardine, Mackerel, Crab, Mussel';
+    const lures=p.lures||s.lures||'Rapala, Fly, Paddle Tail, Spoon';
+    const trace=p.trace||s.trace||'—';
+    const desc=p.description||s.description||'Species profile';
+    return `<div class="species-card" data-open-species="${esc(s.name)}">
+      <div class="species-main">
+        <div class="species-photo-wrap">${photo?`<img class="species-photo" src="${esc(photo)}" alt="${esc(s.name)}">`:`<div class="species-photo empty">NO PHOTO<br>SET</div>`}<button class="species-photo-btn" data-photo-species="${esc(s.name)}" title="Set custom photo">📷</button></div>
+        <div class="species-copy">
+          <div class="species-name">${esc(s.name)}</div><div class="species-type">${esc(p.type||s.type)}${s.scientific?` · <i>${esc(s.scientific)}</i>`:''}</div>
+          <button class="status-bar ${caught?'caught':'missing'}" data-status-species="${esc(s.name)}"><span class="status-left"><span class="status-dot"></span>${caught?'Caught':'Missing'}</span><span class="status-hint">tap to toggle</span></button>
+          <div style="display:flex;gap:6px;margin-top:7px"><button class="species-edit-btn" data-edit-species="${esc(s.name)}">Edit details</button></div>
+        </div>
+      </div>
+      <div class="species-tools">
+        <div class="mini-card-grid">
+          <div class="mini-info-card"><b>About</b><span>${esc(desc)}</span></div>
+          <div class="mini-info-card"><b>Trace</b><span>${esc(trace)}</span></div>
+        </div>
+        <div class="chip-label" style="margin-top:10px">Top optimal baits</div><div class="bait-lure-row">${baits.split(',').map(x=>`<span class="bait-chip">${esc(x.trim())}</span>`).join('')}</div>
+        <div class="chip-label" style="margin-top:9px">Top lures</div><div class="bait-lure-row">${lures.split(',').filter(Boolean).map(x=>`<span class="lure-chip">${esc(x.trim())}</span>`).join('')}</div>
+      </div>
+    </div>`;
+  }).join('') : `<div class="empty-state"><p>No species found.<br><button class="btn btn-primary" id="emptyAddSpeciesBtn" style="max-width:220px;margin:12px auto 0;">+ Add Species</button></p></div>`;
+  root.querySelectorAll('[data-photo-species]').forEach(btn=>btn.addEventListener('click',()=>{selectedSpeciesForPhoto=btn.dataset.photoSpecies;document.getElementById('speciesPhotoInput').click();}));
+  root.querySelectorAll('[data-status-species]').forEach(btn=>btn.addEventListener('click',async()=>{const profiles=await loadSpeciesProfiles();const p=profiles[btn.dataset.statusSpecies]||{};p.manualStatus=!btn.classList.contains('caught');profiles[btn.dataset.statusSpecies]=p;await saveSpeciesProfiles(profiles);renderSpecies();}));
+  root.querySelectorAll('[data-edit-species]').forEach(btn=>btn.addEventListener('click',()=>openSpeciesEditor(btn.dataset.editSpecies)));
+  root.querySelectorAll('[data-open-species]').forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('button'))return;openSpeciesDetail(card.dataset.openSpecies);}));
+  document.getElementById('emptyAddSpeciesBtn')?.addEventListener('click',()=>openSpeciesEditor(null));
+}
+
+
+// ---------- Species detail view ----------
+function getFishingProfile(species, profile){
+  const type=(profile.type||species.type||'').toLowerCase();
+  const isGame=type.includes('game');
+  const isReef=type.includes('reef');
+  return {
+    bestTime: profile.bestTime || (isGame ? 'Dawn & late afternoon' : isReef ? 'Early morning & evening' : 'Around dawn, dusk & moving water'),
+    tide: profile.tide || (isGame ? 'Incoming tide / moving water' : 'Incoming or first half of outgoing tide'),
+    weather: profile.weather || (isGame ? 'Light-to-moderate wind, clean water & active baitfish' : 'Stable pressure, moderate wind & clear-to-slightly-coloured water'),
+    waterTemp: profile.waterTemp || (isGame ? 'Warm, bait-rich water' : 'Stable seasonal water temperature'),
+    moon: profile.moon || 'Use moon phase as a secondary factor; local tide/current is more important',
+    activity: profile.activity || (isGame ? [55,78,96,72,45,68,88,62] : [68,82,91,66,48,62,79,70]),
+    tideTable: profile.tideTable || [
+      {stage:'Low', rating:'Fair', tactic:'Fish structure and deeper pockets'},
+      {stage:'Incoming', rating:'Excellent', tactic:'Work current edges and bait movement'},
+      {stage:'High', rating:'Good', tactic:'Target structure, gutters and ambush points'},
+      {stage:'Outgoing', rating:'Good', tactic:'Focus on drains, channels and current seams'}
+    ],
+    weatherTable: profile.weatherTable || [
+      {condition:'Light wind', rating:'Excellent', note:'Better presentation and easier lure control'},
+      {condition:'Moderate wind', rating:'Good', note:'Can improve surface activity; choose sheltered water'},
+      {condition:'Strong wind', rating:'Poor', note:'Safety first; fish protected water only'},
+      {condition:'Stable conditions', rating:'Good', note:'Consistent conditions can make patterns easier to repeat'}
+    ]
+  };
+}
+function renderActivityChart(values){
+  const labels=['05','07','09','11','13','15','17','19'];
+  return `<div class="activity-chart">${values.map((v,i)=>`<div class="activity-col"><b>${v}%</b><div class="activity-bar" style="height:${Math.max(6,Math.min(100,Number(v)||0))}%"></div><span>${labels[i]}</span></div>`).join('')}</div>`;
+}
+async function openSpeciesDetail(name){
+  const all=[...SPECIES,...await loadCustomSpecies()];
+  const species=all.find(x=>x.name===name) || {name};
+  const profiles=await loadSpeciesProfiles();
+  const p=profiles[name]||{};
+  const fp=getFishingProfile(species,p);
+  const photo=p.photo||'';
+  document.getElementById('speciesDetailTitle').textContent=name;
+  document.getElementById('speciesDetailScientific').textContent=p.scientific||species.scientific||p.type||species.type||'';
+  document.getElementById('speciesDetailBody').innerHTML=`
+    <div class="detail-hero">${photo?`<img src="${esc(photo)}" alt="${esc(name)}">`:`<div class="empty">NO PHOTO<br>SET</div>`}<div><div class="species-name">${esc(name)}</div><div class="species-type">${esc(p.type||species.type||'Fish')}</div><div class="detail-badges" style="margin-top:8px"><span class="detail-badge good">Best: ${esc(fp.bestTime)}</span><span class="detail-badge">Tide: ${esc(fp.tide)}</span></div></div></div>
+    <div class="detail-section"><h3>Best fishing window</h3><div class="detail-summary">${esc(fp.bestTime)}. This is a practical starting profile; conditions vary by location and season.</div>${renderActivityChart(fp.activity)}<div style="display:flex;justify-content:space-between;font:8px var(--font-mono);color:var(--text-dim)"><span>05:00</span><span>TIME OF DAY</span><span>19:00</span></div></div>
+    <div class="detail-section"><h3>Tide guide</h3><table class="detail-table"><thead><tr><th>Tide</th><th>Rating</th><th>Suggested tactic</th></tr></thead><tbody>${fp.tideTable.map(r=>`<tr><td><strong>${esc(r.stage)}</strong></td><td>${esc(r.rating)}</td><td>${esc(r.tactic)}</td></tr>`).join('')}</tbody></table></div>
+    <div class="detail-section"><h3>Weather guide</h3><table class="detail-table"><thead><tr><th>Condition</th><th>Rating</th><th>Why</th></tr></thead><tbody>${fp.weatherTable.map(r=>`<tr><td><strong>${esc(r.condition)}</strong></td><td>${esc(r.rating)}</td><td>${esc(r.note)}</td></tr>`).join('')}</tbody></table></div>
+    <div class="detail-section"><h3>Water & conditions</h3><table class="detail-table"><tbody><tr><th>Water temperature</th><td>${esc(fp.waterTemp)}</td></tr><tr><th>Weather</th><td>${esc(fp.weather)}</td></tr><tr><th>Moon</th><td>${esc(fp.moon)}</td></tr><tr><th>Top baits</th><td>${esc(p.baits||species.baits||'—')}</td></tr><tr><th>Top lures</th><td>${esc(p.lures||species.lures||'—')}</td></tr><tr><th>Trace / method</th><td>${esc(p.trace||species.trace||'—')}</td></tr></tbody></table></div>
+    <button class="btn btn-secondary detail-edit" id="detailEditSpecies">Edit fishing profile</button>
+    <div class="data-credit">Fishing ratings are starting guidance stored in the species profile. Edit them for your local spot, season and personal catch history.</div>`;
+  document.getElementById('speciesDetailOverlay').classList.add('active');
+  document.getElementById('detailEditSpecies').onclick=()=>{document.getElementById('speciesDetailOverlay').classList.remove('active');openSpeciesEditor(name);};
+}
+document.getElementById('closeSpeciesDetail')?.addEventListener('click',()=>document.getElementById('speciesDetailOverlay').classList.remove('active'));
+
+// ---------- Species catalogue ----------
+let catalogEditingId=null,catalogEditingPhoto='';
+const CATALOG_SEED=[
+{id:'seed-sardine',name:'Sardine',category:'Baits',note:'Versatile natural bait. Keep it cold and firm; useful for kob, shad, geelbek and many other predators.',photo:''},
+{id:'seed-squid',name:'Squid / Chokka',category:'Baits',note:'Tough natural bait that stays on the hook well. Useful around reef, surf and deeper structure.',photo:''},
+{id:'seed-sliding',name:'Sliding Trace',category:'Traces',note:'A running sinker-style trace that lets a bait move naturally while the sinker stays below. Good starting setup for surf and bottom fishing.',photo:''},
+{id:'seed-paternoster',name:'Paternoster Trace',category:'Traces',note:'Multi-hook bottom trace suited to bait fishing over sand, reef edges and deeper water.',photo:''}
+];
+function loadCatalog(){try{const v=JSON.parse(localStorage.getItem('fishingCatalogue')||'null');return Array.isArray(v)?v:CATALOG_SEED}catch(e){return CATALOG_SEED}}
+function saveCatalog(v){localStorage.setItem('fishingCatalogue',JSON.stringify(v))}
+function renderCatalog(){const root=document.getElementById('speciesCatalogList');if(!root)return;const active=document.querySelector('.catalog-filter.active')?.dataset.catalogCategory||'All';const q=(document.getElementById('speciesSearchInput')?.value||'').trim().toLowerCase();const items=loadCatalog().filter(x=>(active==='All'||x.category===active)&&(!q||[x.name,x.category,x.note].join(' ').toLowerCase().includes(q)));root.innerHTML=items.length?items.map(x=>`<div class="catalog-card" data-catalog-id="${esc(x.id)}">${x.photo?`<img class="catalog-thumb" src="${esc(x.photo)}" alt="">`:`<div class="catalog-thumb">NO PHOTO</div>`}<div class="catalog-copy"><div class="catalog-name">${esc(x.name)}</div><div class="catalog-meta">${x.category==='Baits'?'Bait':x.category==='Traces'?'Trace':'Fish'}</div><div class="catalog-note">${esc(x.note||'Tap for information')}</div></div><button class="catalog-add" data-edit-catalog="${esc(x.id)}">✎</button></div>`).join(''):`<div class="catalog-empty">No ${active==='All'?'catalogue items':active.toLowerCase()} found.</div>`;root.querySelectorAll('[data-catalog-id]').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('[data-edit-catalog]'))return;openCatalogDetail(el.dataset.catalogId)}));root.querySelectorAll('[data-edit-catalog]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openCatalogEditor(b.dataset.editCatalog)}))}
+function openCatalogEditor(id=null){const item=id?loadCatalog().find(x=>x.id===id):null;catalogEditingId=id;catalogEditingPhoto=item?.photo||'';document.getElementById('catalogEditorTitle').textContent=item?'Edit Catalogue Item':'Add Catalogue Item';document.getElementById('catalogTypeInput').value=item?.category||'Baits';document.getElementById('catalogNameInput').value=item?.name||'';document.getElementById('catalogNoteInput').value=item?.note||'';const prev=document.getElementById('catalogEditorPhotoPreview');prev.src=catalogEditingPhoto;prev.style.display=catalogEditingPhoto?'block':'none';document.getElementById('deleteCatalogItem').style.display=item?'block':'none';document.getElementById('catalogEditorOverlay').classList.add('active')}
+function closeCatalogEditor(){document.getElementById('catalogEditorOverlay').classList.remove('active')}
+function openCatalogDetail(id){const item=loadCatalog().find(x=>x.id===id);if(!item)return;document.getElementById('catalogDetailTitle').textContent=item.name;document.getElementById('catalogDetailType').textContent=item.category==='Baits'?'BAIT':item.category==='Traces'?'TRACE':'FISH';document.getElementById('catalogDetailBody').innerHTML=`${item.photo?`<img class="catalog-detail-photo" src="${esc(item.photo)}" alt="${esc(item.name)}">`:''}<span class="catalog-type-badge">${item.category==='Baits'?'Bait':item.category==='Traces'?'Trace':'Fish'}</span><div class="detail-section"><h3>Information</h3><div class="detail-summary">${esc(item.note||'No notes added yet.')}</div></div><button class="btn btn-secondary" id="editOpenedCatalog">Edit item</button>`;document.getElementById('catalogDetailOverlay').classList.add('active');document.getElementById('editOpenedCatalog').onclick=()=>{document.getElementById('catalogDetailOverlay').classList.remove('active');openCatalogEditor(id)}}
+document.getElementById('closeCatalogDetail')?.addEventListener('click',()=>document.getElementById('catalogDetailOverlay').classList.remove('active'));
+document.getElementById('closeCatalogEditor')?.addEventListener('click',closeCatalogEditor);
+document.getElementById('catalogPhotoBtn')?.addEventListener('click',()=>document.getElementById('catalogEditorPhotoInput').click());
+document.getElementById('catalogEditorPhotoInput')?.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;catalogEditingPhoto=await compressImage(f);const p=document.getElementById('catalogEditorPhotoPreview');p.src=catalogEditingPhoto;p.style.display='block'});
+document.getElementById('saveCatalogItem')?.addEventListener('click',()=>{const name=document.getElementById('catalogNameInput').value.trim();if(!name){toast('Enter a name first');return}const arr=loadCatalog();const item={id:catalogEditingId||uid(),name,category:document.getElementById('catalogTypeInput').value,note:document.getElementById('catalogNoteInput').value.trim(),photo:catalogEditingPhoto};const idx=arr.findIndex(x=>x.id===item.id);if(idx>=0)arr[idx]=item;else arr.push(item);saveCatalog(arr);closeCatalogEditor();renderCatalog();toast('✓ Saved to catalogue')});
+document.getElementById('deleteCatalogItem')?.addEventListener('click',()=>{if(!catalogEditingId)return;saveCatalog(loadCatalog().filter(x=>x.id!==catalogEditingId));closeCatalogEditor();renderCatalog();toast('Catalogue item deleted')});
+document.querySelectorAll('.catalog-filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.catalog-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCatalog()}));
+
+// Species search + add controls
+const speciesSearchInput=document.getElementById('speciesSearchInput');
+const clearSpeciesSearch=document.getElementById('clearSpeciesSearch');
+speciesSearchInput?.addEventListener('input',()=>{
+  if(clearSpeciesSearch) clearSpeciesSearch.classList.toggle('show',!!speciesSearchInput.value);
+  renderSpecies();
+  renderCatalog();
+});
+clearSpeciesSearch?.addEventListener('click',()=>{speciesSearchInput.value='';clearSpeciesSearch.classList.remove('show');speciesSearchInput.focus();renderSpecies();renderCatalog();});
+document.getElementById('addSpeciesBtn')?.addEventListener('click',()=>openSpeciesEditor(null));
+
+
+// Lightweight offline-friendly recognition assist. It uses the image filename first and
+// exposes a manual override in the draft editor; a full vision model can be swapped in later.
+function guessSpeciesFromFilename(fileName){const n=(fileName||'').toLowerCase();const hit=SPECIES.find(s=>n.includes(s.name.toLowerCase())||s.name.toLowerCase().split(' ')[0]&&n.includes(s.name.toLowerCase().split(' ')[0]));return hit?.name||''}
+
+document.getElementById('speciesPhotoInput').addEventListener('change',async e=>{
+  const file=e.target.files[0];
+  if(!file || !selectedSpeciesForPhoto) return;
+  try{
+    const photo=await compressImage(file);
+    const profiles=await loadSpeciesProfiles();
+    profiles[selectedSpeciesForPhoto]={...(profiles[selectedSpeciesForPhoto]||{}),photo,manualStatus:true};
+    await saveSpeciesProfiles(profiles);
+    toast(`✓ ${selectedSpeciesForPhoto} marked Caught`);
+    await renderSpecies();
+  }catch(err){ toast('Could not save species photo'); }
+  e.target.value='';
+});
+
+// ---------- Catches ----------
+async function renderLogGrid(){
+  const catches=await loadCatches();
+  const filtered=catches.filter(c=>catchMode==='mine' ? c.owner!=='other' : c.owner==='other');
+  document.getElementById('logCount').textContent=filtered.length + (filtered.length===1?' CATCH':' CATCHES');
+  const grid=document.getElementById('logGrid');
+  if(!filtered.length){
+    grid.innerHTML=`<div class="empty-state"><p>${catchMode==='mine'?'No personal catches yet. Take a photo or finish a draft.':'No other catches logged yet. Tap + to add one.'}</p></div>`;
+    return;
+  }
+  grid.innerHTML=filtered.map(c=>`
+    <div class="compact-catch" data-id="${esc(c.id)}">
+      <img class="catch-photo" src="${c.photo||''}" alt="">
+      <div class="catch-copy">
+        <div class="catch-name">${esc(c.species||'Unknown fish')}</div>
+        <div class="catch-type">${esc(c.type || (c.owner==='other'?'Other catch':'My catch'))}</div>
+        <div class="catch-weight">${esc(c.weight||'Weight not recorded')}</div>
+      </div>
+    </div>`).join('');
+  grid.querySelectorAll('.compact-catch').forEach(card=>card.addEventListener('click',()=>openDetail(card.dataset.id)));
+}
+document.querySelectorAll('[data-catch-mode]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    catchMode=btn.dataset.catchMode;
+    document.querySelectorAll('[data-catch-mode]').forEach(b=>b.classList.toggle('active',b===btn));
+    document.getElementById('addOtherCatchBtn').style.display=catchMode==='others'?'block':'none';
+    renderLogGrid();
+  });
+});
+document.getElementById('addOtherCatchBtn').style.display='none';
+
+let otherCatchPhoto='';
+document.getElementById('addOtherCatchBtn').addEventListener('click',()=>{
+  otherCatchPhoto='';
+  document.getElementById('otherCatchPhotoPreview').src='';
+  document.getElementById('otherSpecies').value='';
+  document.getElementById('otherType').value='';
+  document.getElementById('otherWeight').value='';
+  document.getElementById('otherNotes').value='';
+  document.getElementById('otherCatchOverlay').classList.add('active');
+});
+document.getElementById('chooseOtherCatchPhoto').addEventListener('click',()=>document.getElementById('otherCatchPhotoInput').click());
+document.getElementById('otherCatchPhotoInput').addEventListener('change',async e=>{
+  const file=e.target.files[0]; if(!file)return;
+  otherCatchPhoto=await compressImage(file);
+  document.getElementById('otherCatchPhotoPreview').src=otherCatchPhoto;
+  e.target.value='';
+});
+document.getElementById('closeOtherCatch').addEventListener('click',()=>document.getElementById('otherCatchOverlay').classList.remove('active'));
+document.getElementById('saveOtherCatch').addEventListener('click',async()=>{
+  const species=document.getElementById('otherSpecies').value.trim();
+  if(!species){toast('Add a fish name');return;}
+  const catches=await loadCatches();
+  catches.unshift({
+    id:uid(), owner:'other', photo:otherCatchPhoto, ts:Date.now(),
+    species, type:document.getElementById('otherType').value.trim()||'Other catch',
+    weight:document.getElementById('otherWeight').value.trim(),
+    notes:document.getElementById('otherNotes').value.trim()
+  });
+  await saveCatches(catches);
+  document.getElementById('otherCatchOverlay').classList.remove('active');
+  toast('✓ Other catch saved');
+  renderLogGrid();
+});
+
+async function openDetail(id){
+  const catches = await loadCatches();
+  const c = catches.find(x=>x.id===id);
+  if(!c) return;
+  const mapUrl = c.lat ? `https://maps.google.com/?q=${c.lat},${c.lng}` : null;
+  document.getElementById('detailBody').innerHTML = `
+    <img class="overlay-photo" src="${c.photo}">
+    <div class="info-grid">
+      <div><div class="k">Species</div><div class="v">${c.species || '—'}</div></div>
+      <div><div class="k">Weight / Length</div><div class="v mono">${c.weight||'—'} ${c.length? '/ '+c.length:''}</div></div>
+      <div><div class="k">Bait</div><div class="v">${c.bait || '—'}</div></div>
+      <div><div class="k">Method / Trace</div><div class="v">${c.method || '—'}</div></div>
+      <div><div class="k">Setup</div><div class="v">${c.setup || '—'}</div></div>
+      <div><div class="k">Tide</div><div class="v">${c.tide || '—'}</div></div>
+      <div><div class="k">Weather</div><div class="v">${c.weather || '—'}</div></div>
+      <div><div class="k">Date / Time</div><div class="v mono">${fmtDate(c.ts)}</div></div>
+    </div>
+    ${c.locationLabel ? `<div class="field"><label>Location</label><div class="v">${c.locationLabel}</div></div>` : ''}
+    ${c.notes ? `<div class="field"><label>Notes</label><div class="v">${c.notes}</div></div>` : ''}
+    ${mapUrl ? `<a class="map-link" href="${mapUrl}" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      Open catch location in Maps</a>` : ''}
+    <button class="btn btn-danger" id="deleteCatchBtn">Delete Record</button>
+  `;
+  document.getElementById('deleteCatchBtn').addEventListener('click', async ()=>{
+    const arr = await loadCatches();
+    const idx = arr.findIndex(x=>x.id===id);
+    if(idx>-1){ arr.splice(idx,1); await saveCatches(arr); }
+    document.getElementById('detailOverlay').classList.remove('active');
+    toast('Record deleted');
+    renderLogGrid();
+  });
+  document.getElementById('detailOverlay').classList.add('active');
+}
+document.getElementById('closeDetail').addEventListener('click', ()=>{
+  document.getElementById('detailOverlay').classList.remove('active');
+});
+
+
+// ---------- Enhanced species editor / duplicate filtering ----------
+let editingSpeciesName='';
+function openSpeciesEditor(name){
+  editingSpeciesName=name||'';
+  const base=name ? (SPECIES.find(x=>x.name===name) || null) : null;
+  loadSpeciesProfiles().then(profiles=>{
+    const p=name ? (profiles[name]||{}) : {};
+    document.getElementById('speciesEditName').value=p.name||base?.name||'';
+    document.getElementById('speciesEditType').value=p.type||base?.type||'Fish';
+    document.getElementById('speciesEditScientific').value=p.scientific||base?.scientific||'';
+    document.getElementById('speciesEditDescription').value=p.description||base?.description||'';
+    document.getElementById('speciesEditBaits').value=p.baits||base?.baits||'';
+    document.getElementById('speciesEditLures').value=p.lures||base?.lures||'';
+    document.getElementById('speciesEditTrace').value=p.trace||base?.trace||'';
+    document.getElementById('speciesEditBestTime').value=p.bestTime||'';
+    document.getElementById('speciesEditTide').value=p.tide||'';
+    document.getElementById('speciesEditWeather').value=p.weather||'';
+    document.getElementById('speciesEditWaterTemp').value=p.waterTemp||'';
+    document.getElementById('speciesEditMoon').value=p.moon||'';
+    document.querySelector('#speciesEditorOverlay .eyebrow').textContent=name?'EDIT SPECIES':'ADD SPECIES';
+    document.getElementById('saveSpeciesEdit').textContent=name?'Save Species':'Add Species';
+    document.getElementById('speciesEditorOverlay').classList.add('active');
+  });
+}
+document.getElementById('closeSpeciesEditor').addEventListener('click',()=>document.getElementById('speciesEditorOverlay').classList.remove('active'));
+document.getElementById('saveSpeciesEdit').addEventListener('click',async()=>{
+  const name=document.getElementById('speciesEditName').value.trim();
+  if(!name){toast('Add a species name');return;}
+  const profiles=await loadSpeciesProfiles();
+  const p=editingSpeciesName ? (profiles[editingSpeciesName]||{}) : {};
+  p.name=name; p.type=document.getElementById('speciesEditType').value.trim()||'Fish';
+  p.scientific=document.getElementById('speciesEditScientific').value.trim();
+  p.description=document.getElementById('speciesEditDescription').value.trim();
+  p.baits=document.getElementById('speciesEditBaits').value.trim();
+  p.lures=document.getElementById('speciesEditLures').value.trim();
+  p.trace=document.getElementById('speciesEditTrace').value.trim();
+  p.bestTime=document.getElementById('speciesEditBestTime').value.trim();
+  p.tide=document.getElementById('speciesEditTide').value.trim();
+  p.weather=document.getElementById('speciesEditWeather').value.trim();
+  p.waterTemp=document.getElementById('speciesEditWaterTemp').value.trim();
+  p.moon=document.getElementById('speciesEditMoon').value.trim();
+  if(editingSpeciesName && editingSpeciesName!==name){delete profiles[editingSpeciesName];}
+  profiles[name]=p; await saveSpeciesProfiles(profiles);
+  if(!editingSpeciesName || !SPECIES.some(x=>x.name===editingSpeciesName)){
+    const custom=await loadCustomSpecies();
+    const idx=custom.findIndex(x=>x.name.toLowerCase()===name.toLowerCase());
+    const item={name,type:p.type,scientific:p.scientific,description:p.description,baits:p.baits,lures:p.lures,trace:p.trace};
+    if(idx>=0) custom[idx]=item; else custom.push(item);
+    await saveCustomSpecies(custom);
+  }
+  document.getElementById('speciesEditorOverlay').classList.remove('active');
+  toast(editingSpeciesName?'✓ Species details updated':'✓ Species added');
+  renderSpecies();
+});
+
+// ---------- Notes ----------
+async function loadNotes(){try{return JSON.parse(localStorage.getItem('fishingNotes')||'[]')}catch(e){return[]}}
+async function saveNotes(v){localStorage.setItem('fishingNotes',JSON.stringify(v))}
+async function renderNotes(){const root=document.getElementById('notesList');if(!root)return;const notes=await loadNotes();root.innerHTML=notes.length?notes.map((n,i)=>`<div class="note-card"><div class="note-date">${fmtDate(n.ts)} <button style="float:right;border:0;background:none;color:var(--danger)" data-delete-note="${i}">×</button></div><div class="note-text">${esc(n.text)}</div></div>`).join(''):'<div class="empty-state"><p>No notes yet.</p></div>';root.querySelectorAll('[data-delete-note]').forEach(b=>b.addEventListener('click',async()=>{const a=await loadNotes();a.splice(Number(b.dataset.deleteNote),1);await saveNotes(a);renderNotes();}));}
+document.getElementById('saveNoteBtn').addEventListener('click',async()=>{const el=document.getElementById('newNoteText');const text=el.value.trim();if(!text){toast('Write a note first');return;}const a=await loadNotes();a.unshift({id:uid(),ts:Date.now(),text});await saveNotes(a);el.value='';toast('✓ Note saved');renderNotes();});
+
+// ---------- Swipe navigation ----------
+const swipeTabs=['camera','draft','species','log','angler-log','notes'];let touchX=0;let touchY=0;
+document.addEventListener('touchstart',e=>{if(e.touches.length===1){touchX=e.touches[0].clientX;touchY=e.touches[0].clientY;}},{passive:true});
+document.addEventListener('touchend',e=>{if(!touchX||e.changedTouches.length!==1)return;const dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;touchX=touchY=0;if(Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*1.35)return;const active=document.querySelector('.nav-btn.active');const cur=swipeTabs.indexOf(active?.dataset.tab||'camera');const next=swipeTabs[Math.max(0,Math.min(swipeTabs.length-1,cur+(dx<0?1:-1)))];if(next&&next!==active?.dataset.tab)showTab(next);},{passive:true});
+
+// ---------- Sinker scrollbar ----------
+function updateSinker(){const el=document.querySelector('.sinker-scrollbar .sinker');const active=document.querySelector('.screen.active');if(!el||!active)return;const max=Math.max(1,active.scrollHeight-active.clientHeight);const pct=active.scrollTop/max;const travel=Math.max(40,window.innerHeight-50);el.style.top=(8+pct*84)+'%';}
+document.querySelectorAll('.screen').forEach(el=>el.addEventListener('scroll',updateSinker,{passive:true}));
+
+// ---------- Daily notifications ----------
+async function enableFishingNotifications(){if(!('Notification' in window)){toast('Notifications are not supported here');return}const perm=await Notification.requestPermission();if(perm!=='granted'){toast('Notification permission was not granted');return}localStorage.setItem('fishingNotifications','1');toast('✓ Daily fishing notifications enabled');sendDailyFishingNotification(true)}
+async function sendDailyFishingNotification(force=false){if(!('Notification' in window)||Notification.permission!=='granted')return;const key=new Date().toISOString().slice(0,10);if(!force&&localStorage.getItem('lastFishingNotification')===key)return;localStorage.setItem('lastFishingNotification',key);const msg='Check today’s wind, sea temperature and tide before choosing your species and tactic.';try{if(navigator.serviceWorker?.ready){const reg=await navigator.serviceWorker.ready;if(reg.showNotification)await reg.showNotification('Fishing conditions',{body:msg,icon:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='});else new Notification('Fishing conditions',{body:msg})}else new Notification('Fishing conditions',{body:msg})}catch(e){}}
+document.getElementById('notifyBtn').addEventListener('click',enableFishingNotifications);
+
+// ---------- Angler Log Functions ----------
+const ANGLER_SPECIES_DB = SPECIES.map((s,i)=>({id:i+1,name:s.name,category:s.type==='Baits'?'Baits':'Fish',baits:s.baits||'',lures:s.lures||'',trace:s.trace||'',photo:'',caught:false}));
+let anglerSpeciesDb = [...ANGLER_SPECIES_DB];
+let myCatches = [];
+let othersCatches = [];
+let currentCatchType = 'my';
+let leafMap = null;
+let userMarker = null;
+
+function escapeHTML(str){
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+function renderAnglerSpecies(){
+  const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  const selectedCategory = document.querySelector('.filter-chip.active')?.dataset.category || 'All';
+  const list = document.getElementById('speciesList');
+  list.innerHTML = '';
+
+  anglerSpeciesDb.forEach((item, index) => {
+    const name = item.name || '';
+    const baits = item.baits || '';
+    const lures = item.lures || '';
+
+    const matchesCat = selectedCategory === 'All' || item.category === selectedCategory || (selectedCategory==='Traces' && !!item.trace) || (selectedCategory==='Lures' && !!item.lures);
+    const trace=(item.trace||'').toLowerCase();
+    const matchesQuery = name.toLowerCase().includes(searchQuery) || baits.toLowerCase().includes(searchQuery) || lures.toLowerCase().includes(searchQuery) || trace.includes(searchQuery);
+
+    if(!matchesCat || !matchesQuery) return;
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.cssText = 'background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 0;';
+
+    const statusBg = item.caught ? 'var(--teal)' : 'var(--line)';
+    const statusText = item.caught ? '#000' : 'var(--text-muted)';
+
+    card.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <strong style="color: var(--text);">${escapeHTML(name)}</strong>
+        <span style="background: ${statusBg}; color: ${statusText}; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold;">
+          ${item.caught ? 'Caught' : 'Missing'}
+        </span>
+      </div>
+      ${item.photo ? `<img src="${escapeHTML(item.photo)}" alt="${escapeHTML(name)}" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:8px;">` : ''}
+      <div style="display: flex; border-bottom: 1px solid var(--line); margin-bottom: 8px;">
+        <div class="mini-tab active" data-content="baits-${index}" style="flex: 1; text-align: center; padding: 6px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid var(--brass);">Baits</div>
+        <div class="mini-tab" data-content="lures-${index}" style="flex: 1; text-align: center; padding: 6px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer;">Lures</div>
+      </div>
+      <div id="baits-${index}" class="mini-tab-content" style="padding-top: 8px; font-size: 0.85rem; color: var(--text);">${escapeHTML(baits || 'Squid, Sardine, Mackerel')}</div>
+      <div style="margin-top:7px;font:10px var(--font-mono);color:var(--text-dim)">Trace: ${escapeHTML(item.trace||'—')}</div>
+      <div id="lures-${index}" class="mini-tab-content hidden" style="padding-top: 8px; font-size: 0.85rem; color: var(--text); display: none;">${escapeHTML(lures || 'Rapala, Paddle Tail, Spoon')}</div>
+    `;
+
+    card.querySelectorAll('.mini-tab').forEach(tab => {
+      tab.addEventListener('click', () => switchMiniTab(tab, tab.dataset.content));
+    });
+
+    list.appendChild(card);
+  });
+}
+
+function switchMiniTab(tabEl, contentId){
+  const parent = tabEl.parentElement.parentElement;
+  parent.querySelectorAll('.mini-tab').forEach(t => {
+    t.style.borderBottom = '2px solid transparent';
+    t.style.color = 'var(--text-muted)';
+  });
+  parent.querySelectorAll('.mini-tab-content').forEach(c => c.style.display = 'none');
+  
+  tabEl.style.borderBottom = '2px solid var(--brass)';
+  tabEl.style.color = 'var(--brass)';
+  
+  const content = parent.querySelector(`#${CSS.escape(contentId)}`);
+  if(content) content.style.display = 'block';
+}
+
+function initMapAndWeather(){
+  const mapEl=document.getElementById('map'); if(!mapEl)return;
+  setTimeout(()=>{
+    if(!leafMap){leafMap=L.map('map').setView([-29.8587,31.0218],10);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(leafMap);}
+    leafMap.invalidateSize(); loadWaypointsOnMap();
+  },200);
+  getLocation().then(loc=>{const pos=loc||{lat:-29.8587,lng:31.0218};if(leafMap){leafMap.setView([pos.lat,pos.lng],12);if(userMarker)userMarker.remove();userMarker=L.marker([pos.lat,pos.lng]).addTo(leafMap).bindPopup(`<b>Live location</b><br>${pos.lat.toFixed(5)}, ${pos.lng.toFixed(5)}`); } updateWeather(pos.lat,pos.lng);});
+}
+async function updateWeather(lat,lng){
+  const weatherURL=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,precipitation&hourly=pressure_msl&timezone=auto`;
+  const marineURL=`https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lng}&current=wave_height,sea_surface_temperature,swell_wave_height&hourly=wave_height,sea_surface_temperature&timezone=auto`;
+  const metURL=`https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lng}`;
+  try{const [wr,mr,met]=await Promise.all([fetch(weatherURL).then(r=>r.json()),fetch(marineURL).then(r=>r.json()).catch(()=>({})),fetch(metURL,{headers:{'User-Agent':'Catch-Log fishing app'}}).then(r=>r.json()).catch(()=>({}))]);const c=wr.current||{},m=mr.current||{};const metNow=met.properties?.timeseries?.[0]?.data?.instant?.details||{};const air=c.temperature_2m??metNow.air_temperature??'—';const wind=c.wind_speed_10m??metNow.wind_speed??'—';const vals=[`${air}°C`,` ${m.sea_surface_temperature??'—'}°C`,` ${wind} km/h`,` ${m.wave_height??'—'} m`,` Tide: local feed unavailable`,'Open-Meteo + MET Norway'];document.getElementById('weather-summary').textContent=`Air ${vals[0]} · Sea ${vals[1]} · Wind ${vals[2]}`;document.querySelectorAll('#weatherGrid .weather-card span').forEach((el,i)=>el.textContent=vals[i]||'—');}catch(e){document.getElementById('weather-summary').textContent='Weather feeds unavailable';}
+}
+async function loadWaypointsOnMap(){if(!leafMap)return;try{const points=JSON.parse(localStorage.getItem('fishingWaypoints')||'[]');points.forEach(w=>L.marker([w.lat,w.lng]).addTo(leafMap).bindPopup(`<b>${esc(w.name)}</b><br>${w.lat.toFixed(5)}, ${w.lng.toFixed(5)}<br>${esc(w.species||'Waypoint')}`));const catches=await loadCatches();catches.filter(c=>c.lat&&c.lng).forEach(c=>L.marker([c.lat,c.lng]).addTo(leafMap).bindPopup(`<b>${esc(c.species||'Catch')}</b><br>${esc(c.locationLabel||'Catch location')}<br>${Number(c.lat).toFixed(5)}, ${Number(c.lng).toFixed(5)}`));}catch(e){console.warn('Map markers unavailable',e)}}
+document.getElementById('saveWaypointBtn').addEventListener('click',async()=>{const loc=await getLocation();if(!loc){toast('Could not get GPS location');return}const name=prompt('Waypoint name','Fishing spot');if(!name)return;const points=JSON.parse(localStorage.getItem('fishingWaypoints')||'[]');points.push({id:uid(),name,lat:loc.lat,lng:loc.lng,species:'',ts:Date.now()});localStorage.setItem('fishingWaypoints',JSON.stringify(points));if(leafMap)L.marker([loc.lat,loc.lng]).addTo(leafMap).bindPopup(`<b>${esc(name)}</b><br>${loc.lat.toFixed(5)}, ${loc.lng.toFixed(5)}`).openPopup();toast('✓ Waypoint saved');});
+document.getElementById('locateBtn').addEventListener('click',()=>getLocation().then(loc=>{if(loc&&leafMap)leafMap.setView([loc.lat,loc.lng],14);else toast('Could not get GPS location')}));
+
+// Angler Log search and filter
+document.getElementById('searchInput')?.addEventListener('input', renderAnglerSpecies);
+document.querySelectorAll('#angler-log-screen .filter-chip').forEach(chip => {
+  chip.addEventListener('click', function(){
+    document.querySelectorAll('#angler-log-screen .filter-chip').forEach(c => {
+      c.style.background = 'var(--line)';
+      c.style.color = 'var(--text)';
+      c.style.fontWeight = '400';
+    });
+    this.style.background = 'var(--brass)';
+    this.style.color = '#000';
+    this.style.fontWeight = '600';
+    renderAnglerSpecies();
+  });
+});
+
+// Initialize catalogue
+renderCatalog();
+
+// Initialize app
+showTab('camera');
+setTimeout(()=>document.getElementById('launchExperience')?.classList.add('underwater'),700);
+setTimeout(()=>{document.getElementById('launchExperience')?.classList.add('fade-out');sendDailyFishingNotification(false);},2600);
+if(localStorage.getItem('fishingNotifications')==='1') setTimeout(()=>sendDailyFishingNotification(false),3000);
+
+// ---------- Init ----------
+updateBadge();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err =>
+      console.warn('Service worker registration failed:', err)
+    );
+  });
+}
+</script>
+
+</body>
+</html>
